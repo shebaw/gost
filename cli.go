@@ -12,6 +12,7 @@ type Arguments struct {
 	host string
 	log string
 	directory string
+	cors bool
 }
 
 func exitOnError(err error) {
@@ -34,6 +35,7 @@ func parseArguments(args *Arguments) {
 	flag.IntVar(&args.port, "port", 8080, "Port to listen")
 	flag.StringVar(&args.host, "host", "localhost", "Host to listen")
 	flag.StringVar(&args.log, "log", "", "Optional log file")
+	flag.BoolVar(&args.cors, "cors", false, "Elable cross-origin resource sharing")
 	flag.Parse()
 
 	if flag.NArg() > 1 {

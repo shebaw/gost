@@ -13,6 +13,21 @@ func logHandler(handler http.Handler) http.Handler {
 	})
 }
 
+func cacheHandler(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+    r.Header.Del("If-None-Match")
+    r.Header.Del("If-Range")
+    r.Header.Del("If-Modified-Since")
+
+    w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+    if r.Proto == "HTTP/1.0" {
+      w.Header().Set("Pragma", "no-cache")
+    }
+
+		handler.ServeHTTP(w, r)
+	})
+}
+
 func corsHandler(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
     origin := r.Header.Get("Origin")

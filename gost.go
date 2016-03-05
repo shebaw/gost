@@ -39,6 +39,7 @@ func main() {
 	if args.cors {
 		handler = corsHandler(handler)
 	}
+	handler = cacheHandler(handler)
 	if !args.quiet {
 		handler = logHandler(handler)
 	}

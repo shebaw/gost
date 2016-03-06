@@ -26,8 +26,8 @@ func parseArguments(args *Arguments) {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage of %s: [-host HOST] [-port PORT] [DIRECTORY]\n\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "Serves the directory specified by the first argument " +
-												 "which defaults to the current working directory if " +
-												 "not specified.\n\n")
+      	"which defaults to the current working directory if " +
+      	"not specified.\n\n")
 		flag.PrintDefaults()
 	}
 

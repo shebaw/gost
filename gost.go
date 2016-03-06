@@ -30,7 +30,6 @@ func init() {
 
 func main() {
 	listen := fmt.Sprintf("%s:%d", args.host, args.port)
-	log.Printf("Static file server running at %s. Ctrl+C to quit.\n", listen)
 
 	http.Handle("/", http.FileServer(http.Dir(args.directory)))
 
@@ -44,9 +43,9 @@ func main() {
 		handler = logHandler(handler)
 	}
 
+	log.Printf("Static file server running at %s. Ctrl+C to quit.\n", listen)
 	err := http.ListenAndServe(listen, handler)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 }

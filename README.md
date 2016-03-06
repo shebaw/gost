@@ -5,7 +5,7 @@
 ## Install
 
 ```
-$ go install github.com/vwochnik/gost
+$ go get github.com/vwochnik/gost
 ```
 
 ## Usage

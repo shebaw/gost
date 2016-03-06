@@ -1,6 +1,7 @@
 package main
 
 import (
+	"runtime"
 	"os"
 	"fmt"
 	"log"
@@ -12,6 +13,7 @@ const Version = "0.1.2"
 var args Arguments
 
 func init() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	parseArguments(&args)
 
 	if len(args.log) > 0 {
@@ -32,20 +34,29 @@ func main() {
 	listen := fmt.Sprintf("%s:%d", args.host, args.port)
 
 	http.Handle("/", http.FileServer(http.Dir(args.directory)))
-
-	var handler http.Handler
-	handler = http.DefaultServeMux
-	if args.cors {
-		handler = corsHandler(handler)
-	}
-	handler = cacheHandler(handler)
-	if !args.quiet {
-		handler = logHandler(handler)
-	}
+	handler := buildHttpHandler()
 
 	log.Printf("Static file server running at %s. Ctrl+C to quit.\n", listen)
 	err := http.ListenAndServe(listen, handler)
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func buildHttpHandler() http.Handler {
+	var handler http.Handler
+
+	handler = http.DefaultServeMux
+
+	if args.cors {
+		handler = corsHandler(handler)
+	}
+
+	handler = cacheHandler(handler)
+
+	if !args.quiet {
+		handler = logHandler(handler)
+	}
+
+	return handler
 }

@@ -13,6 +13,7 @@ type Arguments struct {
 	log string
 	directory string
 	cors bool
+	noCache bool
 }
 
 func exitOnError(err error) {
@@ -36,6 +37,7 @@ func parseArguments(args *Arguments) {
 	flag.StringVar(&args.host, "host", "localhost", "Host to listen")
 	flag.StringVar(&args.log, "log", "", "Optional log file")
 	flag.BoolVar(&args.cors, "cors", false, "Elable cross-origin resource sharing")
+	flag.BoolVar(&args.noCache, "no-cache", false, "Disable caching")
 	flag.Parse()
 
 	if flag.NArg() > 1 {

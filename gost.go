@@ -52,7 +52,9 @@ func buildHttpHandler() http.Handler {
 		handler = corsHandler(handler)
 	}
 
-	handler = cacheHandler(handler)
+	if args.noCache {
+		handler = cacheHandler(handler)
+	}
 
 	if !args.quiet {
 		handler = logHandler(handler)

@@ -38,6 +38,8 @@ Serves the directory specified by the first argument which defaults to the curre
         Host to listen (default "localhost")
   -log string
         Optional log file
+  -no-cache
+        Disable caching
   -port int
         Port to listen (default 8080)
   -quiet

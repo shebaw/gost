@@ -30,8 +30,6 @@ var htmlReplacer = strings.NewReplacer(
 const indexPage = "/index.html"
 
 func (fs *indexHandler) Open(name string) (http.File, error) {
-	log.Printf("dir: %s", args.directory)
-	log.Printf("name: %s", name)
 	if args.directory != "" || name != indexPage {
 		return fs.dir.Open(name)
 	}

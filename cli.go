@@ -32,7 +32,7 @@ func parseArguments(args *Arguments) {
 
 	flag.BoolVar(&args.quiet, "quiet", false, "Quiet mode")
 	flag.IntVar(&args.port, "port", 8080, "Port to listen")
-	flag.StringVar(&args.host, "host", "localhost", "Host to listen")
+	flag.StringVar(&args.host, "host", "0.0.0.0", "Host to listen")
 	flag.StringVar(&args.log, "log", "", "Optional log file")
 	flag.BoolVar(&args.cors, "cors", false, "Elable cross-origin resource sharing")
 	flag.BoolVar(&args.noCache, "no-cache", false, "Disable caching")

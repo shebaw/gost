@@ -1,8 +1,7 @@
 # Gost Static HTTP File Server
 
-> A static HTTP file server written in Golang.
+A static HTTP file server that can serve files specified on `stdin`.
 A fork of https://github.com/vwochnik/gost
-Allows passing the list of files to serve on `stdin`.
 
 ## Install
 

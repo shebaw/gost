@@ -1,11 +1,13 @@
 # Gost Static HTTP File Server
 
 > A static HTTP file server written in Golang.
+A fork of https://github.com/vwochnik/gost
+Allows passing the list of files to serve on `stdin`.
 
 ## Install
 
 ```
-$ go get github.com/vwochnik/gost
+$ go get github.com/shebaw/gost
 ```
 
 ## Usage
@@ -13,7 +15,7 @@ $ go get github.com/vwochnik/gost
 Serve the current directory on port `8080`:
 
 ```
-$ gost
+$ gost .
 Static file server running at localhost:8080. Ctrl+C to quit.
 ```
 
@@ -24,13 +26,19 @@ gost -port 8888 ~/
 Static file server running at localhost:8888. Ctrl+C to quit.
 ```
 
+Server the top 20 recent files in current directory:
+
+```
+ls -c | head -20 | gost
+```
+
 See the help:
 
 ```
 $ gost -h
 Usage of gost: [-host HOST] [-port PORT] [DIRECTORY]
 
-Serves the directory specified by the first argument which defaults to the current working directory if not specified.
+Serves the directory if specified or a list of files specified from stdin if not.
 
   -cors
         Elable cross-origin resource sharing

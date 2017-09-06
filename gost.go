@@ -1,11 +1,11 @@
 package main
 
 import (
-	"runtime"
-	"os"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"runtime"
 )
 
 const Version = "0.1.2"
@@ -17,7 +17,7 @@ func init() {
 	parseArguments(&args)
 
 	if len(args.log) > 0 {
-		file, err := os.OpenFile(args.log, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+		file, err := os.OpenFile(args.log, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		exitOnError(err)
 		defer file.Close()
 		log.SetOutput(file)
@@ -33,7 +33,7 @@ func init() {
 func main() {
 	listen := fmt.Sprintf("%s:%d", args.host, args.port)
 
-	http.Handle("/", http.FileServer(http.Dir(args.directory)))
+	http.Handle("/", http.FileServer(&indexHandler{http.Dir(args.directory)}))
 	handler := buildHttpHandler()
 
 	log.Printf("Static file server running at %s. Ctrl+C to quit.\n", listen)

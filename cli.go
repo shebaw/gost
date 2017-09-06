@@ -1,19 +1,19 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"flag"
+	"fmt"
+	"os"
 )
 
 type Arguments struct {
-	quiet bool
-	port int
-	host string
-	log string
+	quiet     bool
+	port      int
+	host      string
+	log       string
 	directory string
-	cors bool
-	noCache bool
+	cors      bool
+	noCache   bool
 }
 
 func exitOnError(err error) {
@@ -25,10 +25,8 @@ func exitOnError(err error) {
 
 func parseArguments(args *Arguments) {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage of %s: [-host HOST] [-port PORT] [DIRECTORY]\n\n", os.Args[0])
-		fmt.Fprintf(os.Stderr, "Serves the directory specified by the first argument " +
-      	"which defaults to the current working directory if " +
-      	"not specified.\n\n")
+		fmt.Fprintf(os.Stderr, "Usage of %s: [-host HOST] [-port PORT] [DIRECTORY]\n"+
+			"Serve directory if specified or a list of files specified from stdin if not.\n\n", os.Args[0])
 		flag.PrintDefaults()
 	}
 
@@ -46,10 +44,8 @@ func parseArguments(args *Arguments) {
 	}
 
 	args.directory = flag.Arg(0)
-	if len(args.directory) == 0 {
-		args.directory = "."
+	if args.directory != "" {
+		_, err := os.Stat(args.directory)
+		exitOnError(err)
 	}
-
-	_, err := os.Stat(args.directory)
-	exitOnError(err)
 }

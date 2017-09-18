@@ -33,8 +33,8 @@ func init() {
 func main() {
 	listen := fmt.Sprintf("%s:%d", args.host, args.port)
 
-	http.Handle("/", http.FileServer(&indexHandler{http.Dir(args.directory)}))
-	handler := buildHttpHandler()
+	http.Handle("/", http.FileServer(&indexHandler{dir: http.Dir(args.directory)}))
+	handler := buildHTTPHandler()
 
 	log.Printf("Static file server running at %s. Ctrl+C to quit.\n", listen)
 	err := http.ListenAndServe(listen, handler)
@@ -43,7 +43,7 @@ func main() {
 	}
 }
 
-func buildHttpHandler() http.Handler {
+func buildHTTPHandler() http.Handler {
 	var handler http.Handler
 
 	handler = http.DefaultServeMux
